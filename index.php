@@ -32,7 +32,7 @@ $db = Typecho_Db::get();
 $prefix = $db->getPrefix();
 $sticky_posts = $db->fetchAll($this->db
 	->select()->from($prefix.'contents')
-	->orWhere('cid = ',$this->options->sticky)
+	->orWhere('cid = ?',$this->options->sticky)
 	->where('type = ? AND status = ? AND password IS NULL', 'post', 'publish'));
 	rsort( $sticky_posts );//对数组逆向排序，即大ID在前 
 	foreach ($sticky_posts as $sticky_posts) {
