@@ -81,10 +81,10 @@ data-behavior="<?php $this->options->css(); ?>"<?php };?><?php };?>>
          
                    <li class="sidebar-button">
                 
-                    <a  class="sidebar-button-link " href="<?php $this->options->weibo();?>" target="_blank" >
+                    <a  class="sidebar-button-link " href="<?php $this->options->github();?>" target="_blank" >
                 
-                    <i class="sidebar-button-icon fa fa-lg fa-weibo"></i>
-                    <span class="sidebar-button-desc"><?php if ($this->options->cdl == '0'): ?>Weibo<?php endif; ?><?php if ($this->options->cdl == '1'): ?>微博<?php endif; ?></span>
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc"><?php if ($this->options->cdl == '0'): ?>Github<?php endif; ?><?php if ($this->options->cdl == '1'): ?>Github<?php endif; ?></span>
                 </a>
         </li>
 

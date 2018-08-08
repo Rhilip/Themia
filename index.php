@@ -3,9 +3,9 @@
  *Te响应式主题 : Themia，一款个性化十分丰富，附加功能非常全面，自定义字段非常屌的华丽的响应式模板。
  * 
  * @package Themia
- * @author Jrotty
- * @version 3.8.0
- * @link http://qqdie.com
+ * @author Rhilip
+ * @version 3.8.1
+ * @link https://blog.rhilip.info
  */
 ?>
   <?php $this->need('header.php'); ?>
@@ -32,9 +32,7 @@ $db = Typecho_Db::get();
 $prefix = $db->getPrefix();
 $sticky_posts = $db->fetchAll($this->db
 	->select()->from($prefix.'contents')
-	->orWhere('cid = ?',$this->options->sticky_1)
-	->orWhere('cid = ?',$this->options->sticky_2)
-	->orWhere('cid = ?',$this->options->sticky_3)
+	->orWhere('cid = ',$this->options->sticky)
 	->where('type = ? AND status = ? AND password IS NULL', 'post', 'publish'));
 	rsort( $sticky_posts );//对数组逆向排序，即大ID在前 
 	foreach ($sticky_posts as $sticky_posts) {

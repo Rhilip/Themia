@@ -1,15 +1,13 @@
        <footer id="footer" class="main-content-wrap">
-
-
-    <span class="copyrights"> 博客已萌萌哒运行<span id=span_dt_dt></span><br>
+<span class="copyrights"> 博客已萌萌哒运行<span id=span_dt_dt></span><br>
+  除非另有说明，本网站全部内容均为本人原创，并采用 “<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名（BY）-非商业性（NC）-相同方式共享（SA）</a>” 许可协议授权。<br>
  &copy; 2016 <?php $this->options->title(); ?> /
  Power By <a  target="_blank"  href="http://typecho.org/">Typecho</a> 
 / Designed By <a  target="_blank"  href="http://qqdie.com/">Jrotty</a>
 / Loading time <?php timer_stop($this) ?>s
 / <?php $this->options->tongji(); ?></span>
 </footer>
-
-            </div>
+</div>
 
 
 
@@ -134,7 +132,7 @@ data-behavior="<?php $this->options->css(); ?>"<?php };?><?php };?>>
  <h5 id="about-card-bio"><p><?php $this->options->description() ?>
 </p>
 <SCRIPT language=javascript>
-function show_date_time(){window.setTimeout("show_date_time()",1e3);var BirthDay=new Date("<?php $this->options->otime(); ?>"),today=new Date,timeold=today.getTime()-BirthDay.getTime(),msPerDay=864e5,e_daysold=timeold/msPerDay,daysold=Math.floor(e_daysold),e_hrsold=24*(e_daysold-daysold),hrsold=Math.floor(e_hrsold),e_minsold=60*(e_hrsold-hrsold),minsold=Math.floor(60*(e_hrsold-hrsold)),seconds=Math.floor(60*(e_minsold-minsold));span_dt_dt.innerHTML=daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒"}
+function show_date_time(){window.setTimeout("show_date_time()",1e3);var BirthDay=new Date("<?php $this->options->time(); ?>"),today=new Date,timeold=today.getTime()-BirthDay.getTime(),msPerDay=864e5,e_daysold=timeold/msPerDay,daysold=Math.floor(e_daysold),e_hrsold=24*(e_daysold-daysold),hrsold=Math.floor(e_hrsold),e_minsold=60*(e_hrsold-hrsold),minsold=Math.floor(60*(e_hrsold-hrsold)),seconds=Math.floor(60*(e_minsold-minsold));span_dt_dt.innerHTML=daysold+"天"+hrsold+"小时"+minsold+"分"+seconds+"秒"}
 show_date_time();
 </SCRIPT>
 
@@ -184,13 +182,6 @@ function setClipboardText(event) {
     if (clipboardData) {
         event.preventDefault();
  
-        var htmlData = ''
-            + '著作权归作者所有。<br>'
-            + '商业转载请联系作者获得授权，非商业转载请注明出处。<br>'
-            + '作者：<?php $this->author() ?><br>'
-            + '链接：' + window.location.href + '<br>'
-            + '来源：<?php $this->options->siteUrl(); ?><br><br>'
-            + window.getSelection().toString();
         var textData = ''
             + '著作权归作者所有。\n'
             + '商业转载请联系作者获得授权，非商业转载请注明出处。\n'
@@ -198,6 +189,7 @@ function setClipboardText(event) {
             + '链接：' + window.location.href + '\n'
             + '来源：<?php $this->options->siteUrl(); ?>\n\n'
             + window.getSelection().toString();
+        var htmlData = textData.replace(/\n/ig,"<br>")
  
         clipboardData.setData('text/html', htmlData);
         clipboardData.setData('text/plain',textData);
@@ -229,6 +221,39 @@ function setClipboardText(event) {
 <?php if (!empty($this->options->sidebarBlock) && in_array('kiana', $this->options->sidebarBlock)): ?>
 <script type="text/javascript" src="<?php $this->options->themeUrl('bga.min.js'); ?>"></script><?php endif; ?>
 
+  <script type="text/javascript">
+  var a_idx = 0;
+jQuery(document).ready(function($) {
+    $("body").click(function(e) {
+        var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等", "公正" ,"法治", "爱国", "敬业", "诚信", "友善");
+        var $i = $("<span/>").text(a[a_idx]);
+        a_idx = (a_idx + 1) % a.length;
+        var x = e.pageX,
+        y = e.pageY;
+        $i.css({
+            "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
+            "top": y - 20,
+            "left": x,
+            "position": "absolute",
+            "font-weight": "bold",
+            "color": "#c40000"
+        });
+        $("body").append($i);
+        $i.animate({
+            "top": y - 180,
+            "opacity": 0
+        },
+        1500,
+        function() {
+            $i.remove();
+        });
+    });
+});
+  
+  
+  
+  </script>  
+  
 <div class="search_form">
         <form method="post" action="./" class="sosuo"> 
             <input class="search_key" name="s" autocomplete="off" placeholder="Enter search keywords..." type="text" value="" required="required">

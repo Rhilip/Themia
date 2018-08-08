@@ -1,8 +1,8 @@
 <?php
 if (!defined('__TYPECHO_ROOT_DIR__')) exit;
-define("Themia_Version", "3.8.0");
+define("Themia_Version", "3.8.1");
 function themeConfig($form) {
-  echo '<p style="font-size:16px;text-align:center;">感谢您使用TE响应式主题 :<font color="#4A89DC"> Themia</font><font color="#F40"> '.Themia_Version.'</font> ![<a href="http://qqdie.com/archives/with-the-help-of-themia-subject-to-update-the-manual.html" target="_blank">帮助与更新</a>]</p>';
+  echo '<p style="font-size:16px;text-align:center;">感谢您使用TE响应式主题 :<font color="#4A89DC"> Themia</font><font color="#F40"> '.Themia_Version.'</font> ![<a href="http://qqdie.com/archives/with-the-help-of-themia-subject-to-update-the-manual" target="_blank">帮助与更新</a>]</p>';
   //网站LOGO
     $logoUrl = new Typecho_Widget_Helper_Form_Element_Text('logoUrl', NULL, NULL, _t('博主头像地址'), _t('logo头像地址，不填写默认内置头像，这个建议用正方形的图片√'));
     $form->addInput($logoUrl);
@@ -13,17 +13,9 @@ function themeConfig($form) {
     $bgUrl = new Typecho_Widget_Helper_Form_Element_Text('bgUrl', NULL, NULL, _t('背景图or色'), _t('背景设置如果设置图片，这里就填写图片地址，如http://qqdie.com/1.jpg,背景设置如果选择的是颜色，这里就填写颜色代码如#000,这里如果不填写则默认图片或者颜色#444444'));
     $form->addInput($bgUrl);   
 
-    $sticky_1 = new Typecho_Widget_Helper_Form_Element_Text('sticky_1',NULL, NULL,'置顶文章ID', '填写对应主题的 id 即可使某些分类的文章在置顶首页显示（例如 1）。');
-    $sticky_1->input->setAttribute('class', 'mini');
-    $form->addInput($sticky_1->addRule('isInteger', '请填入数字'));
-
-    $sticky_2 = new Typecho_Widget_Helper_Form_Element_Text('sticky_2',NULL, NULL,'置顶文章ID', '填写对应主题的 id 即可使某些分类的文章在置顶首页显示（例如 1）。');
-    $sticky_2->input->setAttribute('class', 'mini');
-    $form->addInput($sticky_2->addRule('isInteger', '请填入数字'));
-
-    $sticky_3 = new Typecho_Widget_Helper_Form_Element_Text('sticky_3',NULL, NULL,'置顶文章ID', '填写对应主题的 id 即可使某些分类的文章在置顶首页显示（例如 1）。');
-    $sticky_3->input->setAttribute('class', 'mini');
-$form->addInput($sticky_3->addRule('isInteger', '请填入数字'));
+    $sticky = new Typecho_Widget_Helper_Form_Element_Text('sticky_1',NULL, NULL,'置顶文章ID', '填写对应主题的 id 即可使某些分类的文章在置顶首页显示（例如 1）'); //，多个文章以英文逗号分割（例如 1,2,3）');
+    $sticky->input->setAttribute('class', 'mini');
+    $form->addInput($sticky->addRule('isInteger', '请填入数字'));
  //文章首行缩进
     $page_suo = new Typecho_Widget_Helper_Form_Element_Radio('page_suo', 
     array(
@@ -35,8 +27,8 @@ $form->addInput($sticky_3->addRule('isInteger', '请填入数字'));
     'close', 
     _t('文章首行缩进'), _t('开启后，所有文章内容将自动缩进2em（两个中文汉字宽度）'));
     $form->addInput($page_suo);
-    $weibo = new Typecho_Widget_Helper_Form_Element_Text('weibo', NULL,'http://weibo.com/jinzeboke', _t('新浪微博地址'), _t('填写你的新浪微博主页地址到菜单目录中'));
-    $form->addInput($weibo);
+    $github = new Typecho_Widget_Helper_Form_Element_Text('github', NULL,'https://github.com/Rhilip', _t('Github地址'), _t('填写你的Github主页地址到菜单目录中'));
+    $form->addInput($github);
 
 $Categories = new Typecho_Widget_Helper_Form_Element_Text('Categories', NULL,NULL, _t('Categories分类归档地址'), _t('新建独立页面，选择模板Categories，这里填入独立页面的完整地址'));
     $form->addInput($Categories);
@@ -80,7 +72,8 @@ $form->addInput($css->multiMode());
 	'Showfull' => _t('手机浏览器强制全屏，仅限于uc和QQ浏览器')
 ,'Showcolor' => _t('手机谷歌浏览器状态栏颜色渲染为白色'),
 	'kiana' => _t('kiana封印解除'),
-	'simg' => _t('全局不显示文章缩略图')
+	'simg' => _t('全局不显示文章缩略图'),
+	'pltx' => _t('评论列表头像自动翻墙')
 ,),
     array('Showcolor','bjq'), _t('工具开关'));
     $form->addInput($sidebarBlock->multiMode());
@@ -92,17 +85,14 @@ $form->addInput($css->multiMode());
 $wxUrl = new Typecho_Widget_Helper_Form_Element_Text('wxUrl', NULL, NULL, _t('微信收款二维码'), _t('这里添加收款二维码的图片地址，不添加则默认jrotty的微信二维码'));
     $form->addInput($wxUrl);
 
-  $jsq = new Typecho_Widget_Helper_Form_Element_Radio('jsq',array('0' => _t('不显示文章浏览次数'),'1' => _t('非插件实现'),'2' => _t('绛木子TePostViews插件')),'1',_t('文章阅读次数显示方案（最后一项需要自行安装对应插件）'),_t("在工具开关中，打开文章浏览次数，然后选择这里的方案，两款方案最终效果都一样<br>提示：非插件的方案和Hanny的Stat插件使用的是同一个数据，所以如果你曾经用的是Star插件，可以直接选择非插件项，同时禁用Star插件，以免重复计数【不禁用的话，计数器计数会翻倍】"));
+  $jsq = new Typecho_Widget_Helper_Form_Element_Radio('jsq',array('0' => _t('不显示文章浏览次数'),'1' => _t('非插件实现'),'2' => _t('绛木子TePostViews插件')),'1',_t('文章阅读次数显示方案（最后一项需要自行安装对应插件）'),_t("在工具开关中，打开文章浏览次数，然后选择这里的方案，两款方案最终效果都一样<br>只有绛木子TePostViews插件，在不清除cookie或者cookie未过期的情况下不会重复计数<br>提示：非插件的方案和Hanny的Stat插件使用的是同一个数据，所以如果你曾经用的是Star插件，可以直接选择非插件项，同时禁用Star插件，以免重复计数【不禁用的话，计数器计数会翻倍】"));
     $form->addInput($jsq); 
-
- 
-
 
     $bqg = new Typecho_Widget_Helper_Form_Element_Radio('bqg',array('1' => _t('不开启版权狗'),'2' => _t('开启版权声明')),'1',_t('版权声明'),_t("对于未登录的用户复制文章内容超过42个字符时，复制的内容会自带版权声明。"));
     $form->addInput($bqg); 
  //建站时间
-    $otime = new Typecho_Widget_Helper_Form_Element_Text('otime', NULL, '2015/06/06', _t('博客成立时间'), _t('在这里填入博客的成立时间,格式要求，完整如填入“2015/06/06 00:00:00”或者只填写年月日“2015/06/06”。'));
-    $form->addInput($otime);
+    $time = new Typecho_Widget_Helper_Form_Element_Text('time', NULL, '2015/06/06', _t('博客成立时间'), _t('在这里填入博客的成立时间,格式要求，完整如填入“2015/06/06 00:00:00”或者只填写年月日“2015/06/06”。'));
+    $form->addInput($time);
 
    //统计代码
 $tongji = new Typecho_Widget_Helper_Form_Element_Textarea('tongji', NULL,'统计代码', _t('备案信息+统计代码'), _t('填入备案信息和cnzz等第三方统计代码'));
@@ -248,7 +238,9 @@ return $r;
 function showThumbnail($widget)
 { 
     // 当文章无图片时的默认缩略图
-    $rand = rand(1,99); 
+   $dir = './usr/themes/Themia/img/sj/';
+    $n=sizeof(scandir($dir))-2;
+    $rand = rand(1,$n); 
     $random = $widget->widget('Widget_Options')->themeUrl . '/img/sj/' . $rand . '.jpg'; // 随机缩略图路径
    // $random = $widget->widget('Widget_Options')->themeUrl . '/img/mr.jpg'; // 若只想要一张默认缩略图请删除本行开头的"//"
 
@@ -329,49 +321,3 @@ $link = '<a class="post-action-btn btn btn--disabled" target="_blank">
 echo $link;
 }
 }
-
-function timesince($older_date,$comment_date = false) {
-$chunks = array(
-array(86400 , '天'),
-array(3600 , '小时'),
-array(60 , '分'),
-array(1 , '秒'),
-);
-$newer_date = time();
-$since = abs($newer_date - $older_date);
-
-for ($i = 0, $j = count($chunks); $i < $j; $i++){
-$seconds = $chunks[$i][0];
-$name = $chunks[$i][1];
-if (($count = floor($since / $seconds)) != 0) break;
-}
-$output = $count.$name.'前';
-
-return $output;
-}
-//获取评论的锚点链接
-function get_comment_at($coid)
-{
-    $db   = Typecho_Db::get();
-    $prow = $db->fetchRow($db->select('parent')->from('table.comments')
-                                 ->where('coid = ? AND status = ?', $coid, 'approved'));
-    $parent = $prow['parent'];
-    if ($parent != "0") {
-        $arow = $db->fetchRow($db->select('author')->from('table.comments')
-                                     ->where('coid = ? AND status = ?', $parent, 'approved'));
-        $author = $arow['author'];
-        $href   = '<a href="#comment-' . $parent . '">@' . $author . '</a>';
-        echo $href;
-    } else {
-        echo '';
-    }
-}
-//输出评论内容
-function get_filtered_comment($coid){
-    $db   = Typecho_Db::get();
-    $rs=$db->fetchRow($db->select('text')->from('table.comments')
-                                 ->where('coid = ? AND status = ?', $coid, 'approved'));
-    $content=$rs['text'];
-    echo $content;
-}
-?>
